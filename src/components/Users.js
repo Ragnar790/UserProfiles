@@ -23,12 +23,13 @@ function Users({
 	const [endIndex, setEndIndex] = useState(10);
 	const [searchText, setSearchText] = useState("");
 
+	//PAGES COMPONENT CALLS THIS FUNCTION AND RETURNS THE APPROPRIATE STARTING AND ENDING INDEX FOR SLICING THE ARRAY OF USERS ACCORDING TO THE CURRENT PAGE
 	const sliceUsers = (currPage) => {
 		setStartIndex(10 * (currPage - 1));
 		setEndIndex(10 * (currPage - 1) + 10);
 	};
 
-	//SEARCG BUTTON HANDLER
+	//SEARCH BUTTON HANDLER
 	const searchHandler = () => {
 		if (searchText.trim() !== "") {
 			fetch(`http://localhost:8080/users/${searchText}`, {
@@ -43,10 +44,12 @@ function Users({
 
 	return (
 		<div className="App Users">
+			{/* NAVIGATION BAR */}
 			<Navbar className="usersNav" color="danger" light expand="md">
 				<NavbarBrand className="brand" onClick={getusername}>
 					<b>Users</b>
 				</NavbarBrand>
+				{/* SEARCH BAR */}
 				<InputGroup className="searchBar">
 					<Input
 						placeholder="Search username"
@@ -59,6 +62,7 @@ function Users({
 						</Button>
 					</InputGroupAddon>
 				</InputGroup>
+				{/* DISPLAYS THE CURRENT USER AND CONTAINS A LOGOUT BUTTON */}
 				<Nav>
 					<NavItem className="profileName">
 						<span>
@@ -71,9 +75,12 @@ function Users({
 				</Nav>
 			</Navbar>
 			<div className="CardDeck">
+				{/* CHECKING IF THE SLICED ARRAY HAS ANY ELEMENT INSIDE IT */}
 				{allUsers.slice(startIndex, endIndex).length > 0 ? (
 					<>
+						{/* IF ARRAY HAS ELEMENTS  */}
 						{allUsers.slice(startIndex, endIndex).map((item, idx) => (
+							// USERCARD COMPONENT
 							<UserCard
 								key={item._id}
 								item={item}
@@ -84,6 +91,7 @@ function Users({
 						))}
 					</>
 				) : (
+					// IF NO ELEMENT IS FOUND
 					<h1 className="noFiles">No more results</h1>
 				)}
 			</div>

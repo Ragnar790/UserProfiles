@@ -39,19 +39,19 @@ function App() {
 	};
 
 	//UPLOAD IMAGE FUNCTION
-	const uploadImage = () => {
-		const formData = new FormData();
+	// const uploadImage = () => {
+	// 	const formData = new FormData();
 
-		formData.append("profile", file);
+	// 	formData.append("profile", file);
 
-		const options = {
-			method: "POST",
-			body: formData,
-			credentials: "include",
-		};
+	// 	const options = {
+	// 		method: "POST",
+	// 		body: formData,
+	// 		credentials: "include",
+	// 	};
 
-		fetch("http://localhost:8080/upload", options);
-	};
+	// 	fetch("http://localhost:8080/upload", options);
+	// };
 
 	// USEEFFECT
 	useEffect(() => {
@@ -145,6 +145,7 @@ function App() {
 	};
 
 	return loggedIn ? (
+		// RENDER USERS COMPONENT IF LOGGEDIN IS TRUE
 		<Users
 			userName={userName}
 			logoutHandler={logoutHandler}
@@ -153,12 +154,13 @@ function App() {
 			getusername={getusername}
 		/>
 	) : (
+		//ELSE RENDER ADD USER COMPONENT
 		<AddUser
 			error={error}
 			addUserHandler={addUserHandler}
 			signInHandler={signInHandler}
-			setFile={setFile}
-			uploadImage={uploadImage}
+			// setFile={setFile}
+			// uploadImage={uploadImage}
 		/>
 	);
 }

@@ -6,6 +6,7 @@ function Pages({ sliceUsers }) {
 	//useStateWithCallbackLazy makes sure that rendering is done only after setState is completed
 	const [start, setStart] = useStateWithCallbackLazy(1);
 
+	//FUNCTION TO HANDLE NAVIGATION BUTTON CLICKS
 	const navClick = (x) => {
 		if (x === "prev") {
 			//setState will take a callBack function

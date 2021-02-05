@@ -8,7 +8,7 @@ function AddUser({
 	error,
 	signInHandler,
 	setFile,
-	uploadImage,
+	// uploadImage,
 }) {
 	const [name, setName] = useState("");
 	const [password, setPassword] = useState("");
@@ -109,9 +109,9 @@ function AddUser({
 							</Input>
 						</FormGroup>
 					</Form>
-					{/* jdlfdlkjd? */}
-					<Button onChange={uploadImage}>Upload</Button>
+					{/* //DISPLAYING ERROR MESSAGE */}
 					<p className="error">{error}</p>
+					{/* //ADD USER BUTTON */}
 					<Button
 						color="danger"
 						onClick={() =>
@@ -120,6 +120,7 @@ function AddUser({
 					>
 						Add User
 					</Button>
+					{/* //LINK TO SIGN IN PAGE FOR WHEN USER ALREADY EXISTS */}
 					<Link to="/signIn">
 						<Button color="danger">Existing User</Button>
 					</Link>

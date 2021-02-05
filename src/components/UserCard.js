@@ -39,8 +39,8 @@ function UserCard({ item, idx, allUsers, setAllUsers }) {
 
 	//SAVE BUTTON HANDLER
 	const saveBtnHandler = (id, index) => {
-		// UPDATING THE FRONTEND ONLY
 		if (
+			// check if no field is empty
 			editedEmail.trim() !== "" &&
 			editedName.trim() !== "" &&
 			editedInterest.trim() !== ""
@@ -57,7 +57,7 @@ function UserCard({ item, idx, allUsers, setAllUsers }) {
 			})
 				.then((r) => r.json())
 				.then((resp) => {
-					console.log("resp", resp);
+					// console.log("resp", resp);
 					allUsers.splice(index, 1, resp);
 					setAllUsers([...allUsers]);
 					setEdit(false);
@@ -77,6 +77,7 @@ function UserCard({ item, idx, allUsers, setAllUsers }) {
 	return (
 		<>
 			{edit === false ? (
+				// if edit button is not clicked
 				<Card className="card">
 					<CardImg
 						// top
@@ -99,8 +100,10 @@ function UserCard({ item, idx, allUsers, setAllUsers }) {
 					</CardBody>
 				</Card>
 			) : (
+				// when edit button is clicked
 				<Card>
 					<Form>
+						{/* USERNAME INPUT  */}
 						<FormGroup>
 							<Input
 								placeholder="Username"
@@ -108,6 +111,7 @@ function UserCard({ item, idx, allUsers, setAllUsers }) {
 								onChange={(e) => setEditedName(e.target.value)}
 							/>
 						</FormGroup>
+						{/* EMAIL INPUT FIELD  */}
 						<FormGroup>
 							<Input
 								placeholder="Email"
@@ -115,6 +119,7 @@ function UserCard({ item, idx, allUsers, setAllUsers }) {
 								onChange={(e) => setEditedEmail(e.target.value)}
 							/>
 						</FormGroup>
+						{/* INTEREST INPUT FIELD  */}
 						<FormGroup>
 							<Input
 								type="select"

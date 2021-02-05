@@ -2,9 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
-const { diskStorage } = require("multer");
-const multer = require("multer");
-const path = require("path");
+// const { diskStorage } = require("multer");
+// const multer = require("multer");
+// const path = require("path");
 
 const app = express();
 app.use(express.json());
@@ -191,47 +191,47 @@ app.get("/userinfo", authMw, async (req, res) => {
 	});
 });
 
-//Storing image in server
+// //Storing image in server
 
-//Storage Engine
-const storage = multer.diskStorage({
-	destination: "./upload/images",
-	filename: (req, file, cb) => {
-		return cb(null, `${file.id}${path.extname(file.originalname)}`);
-	},
-});
+// //Storage Engine
+// const storage = multer.diskStorage({
+// 	destination: "./upload/images",
+// 	filename: (req, file, cb) => {
+// 		return cb(null, `${file.id}${path.extname(file.originalname)}`);
+// 	},
+// });
 
-const upload = multer({
-	storage: storage,
-	//filter
-	// fileFilter:
-	//limits
-	limits: {
-		fileSize: 3 * 1000000,
-	},
-});
+// const upload = multer({
+// 	storage: storage,
+// 	//filter
+// 	// fileFilter:
+// 	//limits
+// 	limits: {
+// 		fileSize: 3 * 1000000,
+// 	},
+// });
 
-app.use("/profile", express.static("upload/images"));
+// app.use("/profile", express.static("upload/images"));
 
-app.post("/upload", upload.single("profile"), (req, res) => {
-	req.file.id = req.session.userId;
-	console.log("upload".req.session.userId);
-	res.json({
-		success: true,
-		profile_url: `http://localhost:3000/profile/${req.file.filename}`,
-	});
-});
+// app.post("/upload", upload.single("profile"), (req, res) => {
+// 	req.file.id = req.session.userId;
+// 	console.log("upload".req.session.userId);
+// 	res.json({
+// 		success: true,
+// 		profile_url: `http://localhost:3000/profile/${req.file.filename}`,
+// 	});
+// });
 
-//error handler for exceeding image limit
-function errHandler(err, req, res, next) {
-	if (err instanceof multer.MulterError) {
-		res.json({
-			success: false,
-			message: err.message,
-		});
-	}
-}
-app.use(errHandler);
+// //error handler for exceeding image limit
+// function errHandler(err, req, res, next) {
+// 	if (err instanceof multer.MulterError) {
+// 		res.json({
+// 			success: false,
+// 			message: err.message,
+// 		});
+// 	}
+// }
+// app.use(errHandler);
 
 app.listen(8080, () => {
 	console.log("app listening on port 8080");
