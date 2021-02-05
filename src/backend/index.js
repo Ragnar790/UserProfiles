@@ -2,6 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
+const { diskStorage } = require("multer");
+const multer = require("multer");
+const path = require("path");
 
 const app = express();
 app.use(express.json());
@@ -66,7 +69,10 @@ app.post("/signup", async (req, res) => {
 			req.session.userId = newUser._id;
 			// storing the current user id in session
 			//storing it in during login or signup
-			res.status(201).send({ success: "Signed up" });
+			res.status(201).send({
+				id: newUser._id,
+				success: "Signed up",
+			});
 		} else {
 			res.status(401).send({ error: "Username already exists" });
 		}
@@ -179,8 +185,53 @@ app.get("/userinfo", authMw, async (req, res) => {
 	// So we can omit using try-catch block
 	console.log("/userInfo");
 	const user = await userModel.findById(req.session.userId);
-	res.send({ userName: user.userName });
+	res.send({
+		userName: user.userName,
+		id: user._id,
+	});
 });
+
+//Storing image in server
+
+//Storage Engine
+const storage = multer.diskStorage({
+	destination: "./upload/images",
+	filename: (req, file, cb) => {
+		return cb(null, `${file.id}${path.extname(file.originalname)}`);
+	},
+});
+
+const upload = multer({
+	storage: storage,
+	//filter
+	// fileFilter:
+	//limits
+	limits: {
+		fileSize: 3 * 1000000,
+	},
+});
+
+app.use("/profile", express.static("upload/images"));
+
+app.post("/upload", upload.single("profile"), (req, res) => {
+	req.file.id = req.session.userId;
+	console.log("upload".req.session.userId);
+	res.json({
+		success: true,
+		profile_url: `http://localhost:3000/profile/${req.file.filename}`,
+	});
+});
+
+//error handler for exceeding image limit
+function errHandler(err, req, res, next) {
+	if (err instanceof multer.MulterError) {
+		res.json({
+			success: false,
+			message: err.message,
+		});
+	}
+}
+app.use(errHandler);
 
 app.listen(8080, () => {
 	console.log("app listening on port 8080");

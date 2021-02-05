@@ -7,6 +7,7 @@ function App() {
 	const [error, setError] = useState("");
 	const [allUsers, setAllUsers] = useState([]);
 	const [userName, setUsername] = useState(undefined);
+	const [file, setFile] = useState("");
 
 	// Function to get the name of the current user
 	const getusername = () => {
@@ -35,6 +36,21 @@ function App() {
 					}
 				})
 		);
+	};
+
+	//UPLOAD IMAGE FUNCTION
+	const uploadImage = () => {
+		const formData = new FormData();
+
+		formData.append("profile", file);
+
+		const options = {
+			method: "POST",
+			body: formData,
+			credentials: "include",
+		};
+
+		fetch("http://localhost:8080/upload", options);
 	};
 
 	// USEEFFECT
@@ -72,6 +88,9 @@ function App() {
 				.then((r) => {
 					if (r.ok) {
 						return { success: true };
+						// const abc = r.json();
+						// abc.success = true;
+						// return abc;
 					} else {
 						return r.json();
 					}
@@ -138,6 +157,8 @@ function App() {
 			error={error}
 			addUserHandler={addUserHandler}
 			signInHandler={signInHandler}
+			setFile={setFile}
+			uploadImage={uploadImage}
 		/>
 	);
 }

@@ -3,7 +3,13 @@ import ExistingUser from "./ExistingUser";
 import { Link, Route, Switch } from "react-router-dom";
 import { Button, Form, FormGroup, FormText, Input, Label } from "reactstrap";
 
-function AddUser({ addUserHandler, error, signInHandler }) {
+function AddUser({
+	addUserHandler,
+	error,
+	signInHandler,
+	setFile,
+	uploadImage,
+}) {
 	const [name, setName] = useState("");
 	const [password, setPassword] = useState("");
 	const [confirmPassword, setConfirmPassword] = useState("");
@@ -73,7 +79,12 @@ function AddUser({ addUserHandler, error, signInHandler }) {
 						{/* PROFILE IMAGE */}
 						<FormGroup>
 							<Label for="File">Upload profile picture</Label>
-							<Input type="file" name="file" id="File" />
+							<Input
+								type="file"
+								name="file"
+								id="File"
+								onChange={(e) => setFile(e.target.files[0])}
+							/>
 							<FormText color="muted">
 								Only .jpeg and .png image files under 3mb are supported.
 							</FormText>
@@ -98,6 +109,8 @@ function AddUser({ addUserHandler, error, signInHandler }) {
 							</Input>
 						</FormGroup>
 					</Form>
+					{/* jdlfdlkjd? */}
+					<Button onChange={uploadImage}>Upload</Button>
 					<p className="error">{error}</p>
 					<Button
 						color="danger"
