@@ -110,6 +110,19 @@ app.get("/users", authMw, async (req, res) => {
 	res.status(201).send(allUsers);
 });
 
+//GET USER BY NAME
+app.get("/users/:name", authMw, async (req, res) => {
+	const searchName = req.params.name;
+	const searchedResult = await userModel.find({ userName: searchName });
+	if (!nullOrUnd(searchedResult)) {
+		res.status(201).send(searchedResult);
+		console.log("Found");
+	} else {
+		res.sendStatus(409);
+		console.log("Not Found");
+	}
+});
+
 //EDIT USER
 app.put("/users/:userId", authMw, async (req, res) => {
 	console.log("/put");

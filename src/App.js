@@ -50,33 +50,43 @@ function App() {
 		email,
 		interest
 	) => {
-		fetch("http://localhost:8080/signup", {
-			method: "POST",
-			body: JSON.stringify({
-				userName,
-				password,
-				confirmPassword,
-				email,
-				interest,
-			}),
-			headers: { "Content-Type": "application/json" },
-			credentials: "include",
-		})
-			.then((r) => {
-				if (r.ok) {
-					return { success: true };
-				} else {
-					return r.json();
-				}
+		if (
+			userName.trim() !== "" &&
+			password.trim() !== "" &&
+			confirmPassword.trim() !== "" &&
+			email.trim() !== "" &&
+			interest.trim() !== ""
+		) {
+			fetch("http://localhost:8080/signup", {
+				method: "POST",
+				body: JSON.stringify({
+					userName,
+					password,
+					confirmPassword,
+					email,
+					interest,
+				}),
+				headers: { "Content-Type": "application/json" },
+				credentials: "include",
 			})
-			.then((r) => {
-				if (r.success === true) {
-					return getusername();
-					// console.log(userName, password, confirmPassword, email, interest);
-				} else {
-					setError(r.error);
-				}
-			});
+				.then((r) => {
+					if (r.ok) {
+						return { success: true };
+					} else {
+						return r.json();
+					}
+				})
+				.then((r) => {
+					if (r.success === true) {
+						return getusername();
+						// console.log(userName, password, confirmPassword, email, interest);
+					} else {
+						setError(r.error);
+					}
+				});
+		} else {
+			setError("Please enter all fields");
+		}
 	};
 
 	// SIGN IN HANDLER
@@ -121,6 +131,7 @@ function App() {
 			logoutHandler={logoutHandler}
 			allUsers={allUsers}
 			setAllUsers={setAllUsers}
+			getusername={getusername}
 		/>
 	) : (
 		<AddUser

@@ -46,3 +46,25 @@ Button#searchBtn {
 	font-family: sans-serif;
 	margin: 140px 0px;
 }
+.brand {
+	cursor: pointer;
+	background-color: rgba(255, 255, 255, 0.281);
+	padding: 5px;
+	border-radius: 5px;
+}
+.usersNav {
+	width: 97%;
+	border-radius: 5px;
+}
+.profileName {
+	background-color: rgba(255, 255, 255, 0.349);
+	padding: 2px;
+	padding-left: 4px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	border-radius: 5px;
+}
+.profileName .logoutBtn {
+	margin-left: 9px;
+}
